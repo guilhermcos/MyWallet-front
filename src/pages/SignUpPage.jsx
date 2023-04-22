@@ -1,16 +1,23 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import MyWalletLogo from "../components/MyWalletLogo";
 import { useState } from "react";
+import { ProgressBar } from "react-loader-spinner";
+import AlertMessage from "../components/AlertMessage";
 
 export default function SignUpPage() {
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
   const [inputData, setInputData] = useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
+  const navigate = useNavigate();
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -28,28 +35,50 @@ export default function SignUpPage() {
     }
   }
 
+  function alertOkClick() {
+    setShowAlert(false);
+    setIsDisabled(false);
+  }
+
   function registerUser(e) {
     e.preventDefault();
     const { name, email, password, confirmPassword } = inputData;
     if (password !== confirmPassword) {
-      return alert("a Senha e a Confirmação de senha precisam ser iguais!");
+      setAlertMessage("A senha e a confirmação de senha devem ser iguais!");
+      setIsDisabled(true);
+      setShowAlert(true);
+      return
     }
+    setIsLoading(true);
 
-    const body = { ...inputData }; 
+    const body = { ...inputData };
     delete body.confirmPassword;
 
     axios
       .post(`http://localhost:5000/auth/signup`, body)
       .then((res) => {
+        setIsLoading(false);
         console.log(res.data);
+        navigate("/");
       })
       .catch((err) => {
-        console.log(err.response.data);
+        setIsLoading(false);
+        if (err.response.status === 409) {
+          setAlertMessage("E-mail já cadastrado");
+        } else {
+          setAlertMessage(err.response.data);
+        }
+        setIsDisabled(true);
+        setShowAlert(true);
+        return
       });
   }
 
   return (
     <SingUpContainer>
+      {showAlert &&
+        <AlertMessage alertOkClick={alertOkClick} alertMessage={alertMessage} />
+      }
       <form onSubmit={registerUser}>
         <MyWalletLogo />
         <input
@@ -58,6 +87,7 @@ export default function SignUpPage() {
           name="name"
           minLength={3}
           type="text"
+          disabled={isDisabled}
           required
         />
         <input
@@ -65,6 +95,7 @@ export default function SignUpPage() {
           placeholder="E-mail"
           name="email"
           type="email"
+          disabled={isDisabled}
           required
         />
         <input
@@ -73,6 +104,7 @@ export default function SignUpPage() {
           name="password"
           type="password"
           autoComplete="new-password"
+          disabled={isDisabled}
           required
         />
         <input
@@ -81,20 +113,27 @@ export default function SignUpPage() {
           name="confirmPassword"
           type="password"
           autoComplete="new-password"
+          disabled={isDisabled}
           required
         />
-        <button type="submit">Cadastrar</button>
+        <button type="submit" disabled={isDisabled}>{isLoading ? <ProgressBar height="80" borderColor="#ffffff" /> : "Cadastrar"}</button>
       </form>
 
-      <Link>Já tem uma conta? Entre agora!</Link>
+      <Link to={"/"}>Já tem uma conta? Entre agora!</Link>
     </SingUpContainer>
   );
 }
 
 const SingUpContainer = styled.section`
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 50px;
+      }
+      `;

@@ -55,7 +55,7 @@ export default function SignUpPage() {
     delete body.confirmPassword;
 
     axios
-      .post(`http://localhost:5000/auth/signup`, body)
+      .post(`${process.env.REACT_APP_LINK_API}/auth/signup`, body)
       .then((res) => {
         setIsLoading(false);
         console.log(res.data);
@@ -63,7 +63,9 @@ export default function SignUpPage() {
       })
       .catch((err) => {
         setIsLoading(false);
-        if (err.response.status === 409) {
+        if (err.message === "Network Error") {
+          setAlertMessage("Erro de conexão com o servidor");
+        } else if (err.response.status === 409) {
           setAlertMessage("E-mail já cadastrado");
         } else {
           setAlertMessage(err.response.data);

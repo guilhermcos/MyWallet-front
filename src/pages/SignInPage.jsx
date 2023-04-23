@@ -19,7 +19,7 @@ export default function SignInPage() {
 
   function handleChange(e) {
     const { name, value } = e.target;
-    
+
     if (name === "email") {
       setInputData((inputData) => ({ ...inputData, email: value }));
     }
@@ -35,7 +35,7 @@ export default function SignInPage() {
     const body = { ...inputData };
 
     axios
-      .post(`http://localhost:5000/auth/signin`, body)
+      .post(`${process.env.REACT_APP_LINK_API}/auth/signin`, body)
       .then((res) => {
         setIsLoading(false);
         console.log(res.data);
@@ -43,7 +43,9 @@ export default function SignInPage() {
       })
       .catch((err) => {
         setIsLoading(false);
-        if (err.response.status === 401) {
+        if (err.message === "Network Error") {
+          setAlertMessage("Erro de conexão com o servidor");
+        } else if (err.response.status === 401) {
           setAlertMessage("E-mail ou Senha inválidos");
         } else if (err.response.status === 404) {
           setAlertMessage("E-mail não cadastrado");

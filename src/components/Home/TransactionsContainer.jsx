@@ -1,8 +1,10 @@
 import styled from "styled-components";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function TransactionsContainer(props) {
   const { transactions } = props;
   let saldo = 0;
+  const navigate = useNavigate();
 
   if (transactions.length === 0) {
     return (
@@ -29,7 +31,20 @@ export default function TransactionsContainer(props) {
               <ListItemContainer key={transaction._id}>
                 <div>
                   <span>{transaction.date.replace("-", "/")}</span>
-                  <strong>{transaction.description}</strong>
+
+                  <strong
+                    onClick={() => {
+                      navigate(
+                        `/editar-transacao/${
+                          transaction.type
+                        }/${transaction.value.toFixed(2).replace(".", ",")}/${
+                          transaction.description
+                        }/${transaction._id}`
+                      );
+                    }}
+                  >
+                    {transaction.description}
+                  </strong>
                 </div>
                 <Value color={transaction.type}>
                   {transaction.value.toFixed(2).replace(".", ",")}
@@ -93,6 +108,11 @@ const StyledTransactionsContainer = styled.article`
     strong {
       font-weight: 700;
       text-transform: uppercase;
+    }
+    a {
+      font-weight: 700;
+      text-transform: uppercase;
+      color: black;
     }
   }
 `;

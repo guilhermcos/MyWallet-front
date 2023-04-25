@@ -113,6 +113,8 @@ const StyledTransactionsContainer = styled.article`
     background-color: #ffffff;
     overflow-y: hidden;
     height: 50px;
+    padding-left: 15px;
+    padding-right: 15px;
     display: flex;
     align-items: center;
     justify-content: space-between;

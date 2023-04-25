@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import MyWalletLogo from "../components/MyWalletLogo";
 import AlertMessage from "../components/AlertMessage";
@@ -15,7 +15,13 @@ export default function SignInPage() {
     email: "",
     password: "",
   });
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const name = localStorage.getItem("name");
+    if (token && name) navigate("/home");
+  }, []);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -33,13 +39,16 @@ export default function SignInPage() {
     setIsLoading(true);
 
     const body = { ...inputData };
+    localStorage.removeItem("token");
+    localStorage.removeItem("name");
 
     axios
       .post(`${process.env.REACT_APP_LINK_API}/auth/signin`, body)
       .then((res) => {
         setIsLoading(false);
-        console.log(res.data);
-        navigate("/home")
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("name", res.data.name);
+        navigate("/home");
       })
       .catch((err) => {
         setIsLoading(false);
@@ -54,7 +63,7 @@ export default function SignInPage() {
         }
         setIsDisabled(true);
         setShowAlert(true);
-        return
+        return;
       });
   }
 
@@ -65,9 +74,9 @@ export default function SignInPage() {
 
   return (
     <SingInContainer>
-      {showAlert &&
+      {showAlert && (
         <AlertMessage alertOkClick={alertOkClick} alertMessage={alertMessage} />
-      }
+      )}
       <form onSubmit={loginUser}>
         <MyWalletLogo />
         <input
@@ -88,7 +97,13 @@ export default function SignInPage() {
           disabled={isDisabled}
           required
         />
-        <button type="submit" disabled={isDisabled} >{isLoading ? <ProgressBar height="80" borderColor="#ffffff" /> : "Entrar"}</button>
+        <button type="submit" disabled={isDisabled}>
+          {isLoading ? (
+            <ProgressBar height="80" borderColor="#ffffff" />
+          ) : (
+            "Entrar"
+          )}
+        </button>
       </form>
 
       <Link to={"/cadastro"}>Primeira vez? Cadastre-se!</Link>
@@ -104,9 +119,9 @@ const SingInContainer = styled.div`
   justify-content: center;
   align-items: center;
   button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 50px;
-      }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+  }
 `;

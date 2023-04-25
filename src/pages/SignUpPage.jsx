@@ -42,7 +42,7 @@ export default function SignUpPage() {
 
   function registerUser(e) {
     e.preventDefault();
-    const { name, email, password, confirmPassword } = inputData;
+    const { password, confirmPassword } = inputData;
     if (password !== confirmPassword) {
       setAlertMessage("A senha e a confirmação de senha devem ser iguais!");
       setIsDisabled(true);

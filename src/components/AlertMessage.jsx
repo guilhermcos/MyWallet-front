@@ -1,18 +1,21 @@
 import styled from "styled-components";
 
 export default function AlertMessage(props) {
-    const { alertMessage, alertOkClick } = props;
-    return (
-        <Message>
-            <h2>Erro</h2>
-            <p>{alertMessage}</p>
-            <button onClick={alertOkClick}>OK</button>
-        </Message>
-    )
+  const { alertMessage, alertOkClick } = props;
+  return (
+    <Message>
+      <h2>Oops...</h2>
+      <p>{alertMessage}</p>
+      <button onClick={alertOkClick}>OK</button>
+    </Message>
+  );
 }
 
 const Message = styled.div`
-  position: absolute;
+  z-index: 2;
+  position: fixed;
+  left: 5%;
+  top: calc(50% - 90px);
   height: 150px;
   width: 90%;
   display: flex;

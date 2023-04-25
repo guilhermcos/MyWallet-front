@@ -1,15 +1,17 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { ProgressBar } from "react-loader-spinner";
 import styled from "styled-components";
 
 export default function TransactionsPage(props) {
-  const navigate = useNavigate();
-  const { tipo } = useParams();
+  const [isLoading, setIsLoading] = useState(false);
   const [inputData, setInputData] = useState({
     description: "",
     value: 0,
   });
+  const navigate = useNavigate();
+  const { tipo } = useParams();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -25,6 +27,7 @@ export default function TransactionsPage(props) {
 
   function newTransaction(e) {
     e.preventDefault();
+    setIsLoading(true);
     let type;
     if (tipo === "entrada") {
       type = "income";
@@ -45,9 +48,11 @@ export default function TransactionsPage(props) {
         config
       )
       .then((res) => {
+        setIsLoading(false);
         navigate("/home");
       })
       .catch((err) => {
+        setIsLoading(false);
         navigate("/home");
       });
   }
@@ -84,7 +89,11 @@ export default function TransactionsPage(props) {
           required
         />
         <button type="submit">
-          Salvar {tipo === "entrada" ? "entrada" : "saída"}
+          {isLoading ? (
+            <ProgressBar height="80" borderColor="#ffffff" />
+          ) : (
+            `Salvar ${tipo === "entrada" ? "entrada" : "saída"}`
+          )}
         </button>
       </form>
     </TransactionsContainer>
@@ -102,5 +111,11 @@ const TransactionsContainer = styled.main`
     margin-top: 35px;
     align-self: flex-start;
     margin-bottom: 40px;
+  }
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
   }
 `;

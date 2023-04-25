@@ -15,7 +15,7 @@ export default function HomePage() {
   const [alertMessage, setAlertMessage] = useState("");
   const [userName, setUserName] = useState("");
   const [transactions, setTransactions] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -24,7 +24,7 @@ export default function HomePage() {
       localStorage.removeItem("token");
       localStorage.removeItem("name");
       navigate("/");
-      return
+      return;
     }
     setUserName(name[0].toUpperCase() + name.slice(1).toLowerCase());
 
@@ -39,6 +39,7 @@ export default function HomePage() {
         setIsLoading(false);
       })
       .catch((err) => {
+        setIsLoading(false);
         setAlertMessage(err.message);
         setShowAlert(true);
         setIsDisabled(true);

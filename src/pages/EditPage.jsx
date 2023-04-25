@@ -30,7 +30,9 @@ export default function EditPage(props) {
     setIsLoading(true);
     let type = tipo;
     const token = localStorage.getItem("token");
-    let body = { ...inputData, type };
+    let valor = inputData.value;
+    valor = Number(valor);
+    let body = { ...inputData, type, value: valor };
     let config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -60,7 +62,7 @@ export default function EditPage(props) {
     if (name === "value") {
       if (value === "") {
         setInputData((inputData) => ({ ...inputData, value: "" }));
-        return
+        return;
       }
       value = value.replace(",", ".");
       value = parseFloat(value);

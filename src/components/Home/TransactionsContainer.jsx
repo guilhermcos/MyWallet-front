@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
+import { BiTrash } from "react-icons/bi";
 
 export default function TransactionsContainer(props) {
-  const { transactions } = props;
+  const { transactions, setShowConfirm, setDeleteId, setIsDisabled } = props;
   let saldo = 0;
   const navigate = useNavigate();
 
@@ -48,6 +49,14 @@ export default function TransactionsContainer(props) {
                 </div>
                 <Value color={transaction.type}>
                   {transaction.value.toFixed(2).replace(".", ",")}
+                  <BiTrash
+                    onClick={() => {
+                      setDeleteId(transaction._id);
+                      setIsDisabled(true);
+                      setShowConfirm(true);
+                    }}
+                    color="red"
+                  />
                 </Value>
               </ListItemContainer>
             );
@@ -87,6 +96,8 @@ const StyledTransactionsContainer = styled.article`
   > div {
     overflow-y: scroll;
     padding: 16px;
+    padding-right: 0px;
+    padding-left: 6px;
   }
   position: relative;
   overflow-y: hidden;
@@ -121,6 +132,8 @@ const Value = styled.div`
   font-size: 16px;
   text-align: right;
   color: ${(props) => (props.color === "income" ? "#03AC00" : "#C70000")};
+  display: flex;
+  gap: 3px;
 `;
 const ListItemContainer = styled.li`
   display: flex;

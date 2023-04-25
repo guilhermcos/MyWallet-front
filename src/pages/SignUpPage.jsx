@@ -58,7 +58,6 @@ export default function SignUpPage() {
       .post(`${process.env.REACT_APP_LINK_API}/auth/signup`, body)
       .then((res) => {
         setIsLoading(false);
-        console.log(res.data);
         navigate("/");
       })
       .catch((err) => {

@@ -7,10 +7,13 @@ import { useNavigate } from "react-router-dom";
 import { MagnifyingGlass } from "react-loader-spinner";
 import TransactionsContainer from "../components/Home/TransactionsContainer";
 import AlertMessage from "../components/AlertMessage";
+import ConfirmMessage from "../components/ConfirmMessage";
 
 export default function HomePage() {
   const navigate = useNavigate();
   const [showAlert, setShowAlert] = useState(false);
+  const [deleteId, setDeleteId] = useState("");
+  const [showConfirm, setShowConfirm] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [userName, setUserName] = useState("");
@@ -44,7 +47,7 @@ export default function HomePage() {
         setShowAlert(true);
         setIsDisabled(true);
       });
-  }, []);
+  }, [transactions]);
 
   function logOut() {
     localStorage.removeItem("token");
@@ -58,6 +61,44 @@ export default function HomePage() {
     logOut();
   }
 
+  function deleteTransaction() {
+    const token = localStorage.getItem("token");
+    const config = axios
+      .delete(
+        `${process.env.REACT_APP_LINK_API}/transactions/delete-transaction/${deleteId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        setDeleteId("");
+        setShowConfirm(false);
+        setIsDisabled(false);
+        setTransactions([]);
+        setIsLoading(true);
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+        setDeleteId("");
+        setShowConfirm(false);
+        setIsDisabled(false);
+        setTransactions([]);
+        setIsLoading(true);
+      });
+  }
+
+  function confirmOkClick() {
+    deleteTransaction();
+  }
+
+  function confirmCancelClick() {
+    setIsDisabled(false);
+    setDeleteId("");
+    setShowConfirm(false);
+  }
+
   return (
     <HomeContainer>
       <Header>
@@ -69,10 +110,21 @@ export default function HomePage() {
           <MagnifyingGlass width={110} height={110} />
         </LoadingTransactionContainer>
       ) : (
-        <TransactionsContainer transactions={transactions} />
+        <TransactionsContainer
+          setIsDisabled={setIsDisabled}
+          setDeleteId={setDeleteId}
+          setShowConfirm={setShowConfirm}
+          transactions={transactions}
+        />
       )}
       {showAlert && (
         <AlertMessage alertOkClick={alertOkClick} alertMessage={alertMessage} />
+      )}
+      {showConfirm && (
+        <ConfirmMessage
+          confirmCancelClick={confirmCancelClick}
+          confirmOkClick={confirmOkClick}
+        />
       )}
 
       <ButtonsContainer>

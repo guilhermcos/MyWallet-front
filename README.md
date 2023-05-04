@@ -1,5 +1,7 @@
+![gif-wallet](https://user-images.githubusercontent.com/120587680/236262414-05507cf1-e24c-48d0-af6f-c20fe00b3106.gif)
+
 # Introduction
-This project is a web application for money management.
+This project is a Mobile web application for money management.
 
 The application has a login screen and a user registration screen, where new users can register. After login, the user is redirected to the main screen, where they can add new transactions and view the transactions already registered.
 

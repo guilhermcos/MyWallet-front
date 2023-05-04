@@ -42,6 +42,3 @@ When clicking on the edit transaction button, the user is redirected to the tran
 
 ## Delete Transactions
 When clicking on the delete transaction button, the transaction will be removed from the database and will no longer be displayed in the transaction list.
-
-## Final Considerations
-This project was developed to practice the concepts learned during the Labenu Full Stack course. Feel free to use this project as a basis for your own applications or to continue improving it.

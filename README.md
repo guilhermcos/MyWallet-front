@@ -1,70 +1,47 @@
-# Getting Started with Create React App
+# Introduction
+This project is a web application for money management.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The application has a login screen and a user registration screen, where new users can register. After login, the user is redirected to the main screen, where they can add new transactions and view the transactions already registered.
 
-## Available Scripts
+The project is divided into two repositories: this one one for the front-end and one for the back-end. The front-end was developed using HTML, CSS, JS, and React, while the back-end was developed using Node.js and Express using a noSQL database (MongoDB).
 
-In the project directory, you can run:
+## Installation
+To run the project on your local machine, you need to have Node.js installed. Clone the front-end and back-end repositories and follow the instructions below:
 
-### `npm start`
+### Front-end
+Clone the front-end repository.
+Access the front-end directory through the terminal.
+Install the project dependencies using the command npm install.
+Run the command npm start to start the server.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Back-end
+clone the back-end repository.
+Access the back-end directory through the terminal.
+Install the project dependencies using the command npm install.
+config the .env file.
+Edit the .env file with the necessary information, such as database access credentials and the PORT used.
+Run the command npm start to start the server.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Features
+The project has the following features:
 
-### `npm test`
+## User Registration
+The user can register on the application through the /cadastro route. It is necessary to fill in all the mandatory fields and confirm the password. The password will be encrypted before being stored in the database.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Login
+The user can log in to the application through the / route. It is necessary to correctly fill in the email and password to access the main screen.
 
-### `npm run build`
+## Add Transactions
+The user can add a new transaction to the main screen of the application. It is necessary to fill in all the mandatory fields and select the transaction completion date. The transaction will be saved in the database and displayed in the transaction list.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## List Transactions
+On the main screen of the application, the user can view the list of registered transactions. The transactions are displayed in chronological order, from the most recent to the oldest. It is possible to edit or delete a transaction by clicking on the corresponding buttons.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Edit Transactions
+When clicking on the edit transaction button, the user is redirected to the transaction editing screen. It is possible to edit all the fields of the transaction. The changes will be saved in the database and reflected in the transaction list.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Delete Transactions
+When clicking on the delete transaction button, the transaction will be removed from the database and will no longer be displayed in the transaction list.
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Final Considerations
+This project was developed to practice the concepts learned during the Labenu Full Stack course. Feel free to use this project as a basis for your own applications or to continue improving it.

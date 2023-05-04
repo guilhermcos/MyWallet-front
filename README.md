@@ -1,5 +1,9 @@
 ![gif-wallet](https://user-images.githubusercontent.com/120587680/236262414-05507cf1-e24c-48d0-af6f-c20fe00b3106.gif)
 
+## Deploy
+You can test the app here: https://mywallet-self.vercel.app/
+obs: As a free hosting service is being used, the initial request may take a few seconds to load. However, once the server is up and running, the response time should improve significantly.
+
 # Introduction
 This project is a Mobile web application for money management.
 

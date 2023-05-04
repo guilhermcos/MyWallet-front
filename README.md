@@ -1,15 +1,15 @@
 ![gif-wallet](https://user-images.githubusercontent.com/120587680/236262414-05507cf1-e24c-48d0-af6f-c20fe00b3106.gif)
 
-## Deploy
-You can test the app here: https://mywallet-self.vercel.app/
-obs: As a free hosting service is being used, the initial request may take a few seconds to load. However, once the server is up and running, the response time should improve significantly.
-
 # Introduction
 This project is a Mobile web application for money management.
 
 The application has a login screen and a user registration screen, where new users can register. After login, the user is redirected to the main screen, where they can add new transactions and view the transactions already registered.
 
 The project is divided into two repositories: this one one for the front-end and one for the back-end. The front-end was developed using HTML, CSS, JS, and React, while the back-end was developed using Node.js and Express using a noSQL database (MongoDB).
+
+## Deploy
+You can test the app here: https://mywallet-self.vercel.app/
+obs: As a free hosting service is being used, the initial request may take a few seconds to load. However, once the server is up and running, the response time should improve significantly.
 
 ## Installation
 To run the project on your local machine, you need to have Node.js installed. Clone the front-end and back-end repositories and follow the instructions below:
